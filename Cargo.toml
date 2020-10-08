@@ -1,0 +1,25 @@
+[package]
+name = "kg-script"
+version = "0.1.0"
+authors = ["Jakub Chłapiński <jakub.chlapinski@kodegenix.pl>"]
+description = """
+Scripting language operating on `kg-tree` object graph data
+"""
+readme = "README.md"
+license = "Apache-2.0 OR MIT"
+repository = "https://github.com/Kodegenix/kg-script"
+edition = "2018"
+
+[workspace]
+
+[dependencies]
+kg-display = "0.1.2"
+kg-display-derive = "0.1.1"
+kg-diag = "0.4.0"
+kg-diag-derive = "0.4.0"
+kg-utils = "0.4.0"
+kg-symbol = "0.2.0"
+lazy_static = "1.4.0"
+backtrace = "0.3.51"
+
+[dev-dependencies]
