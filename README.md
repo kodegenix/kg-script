@@ -5,7 +5,7 @@
 [![Build Status](https://travis-ci.org/Kodegenix/kg-script.svg?branch=master)](https://travis-ci.org/Kodegenix/kg-script)
 [![codecov](https://codecov.io/gh/kodegenix/kg-script/branch/master/graph/badge.svg)](https://codecov.io/gh/kodegenix/kg-script)
 
-Generic object tree with Opath query language, similar to XPath.
+Scripting language operating on [kg-tree](github.com/kodegenix/kg-tree) object graph data.
 
 ## Builds statuses for Rust channels
 
