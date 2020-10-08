@@ -1,5 +1,5 @@
 # kg-script
-<!--
+
 [![Latest Version](https://img.shields.io/crates/v/kg-script.svg)](https://crates.io/crates/kg-script)
 [![Documentation](https://docs.rs/kg-script/badge.svg)](https://docs.rs/kg-script)
 [![Build Status](https://travis-ci.org/Kodegenix/kg-script.svg?branch=master)](https://travis-ci.org/Kodegenix/kg-script)
@@ -17,7 +17,7 @@ Generic object tree with Opath query language, similar to XPath.
 [2]: https://travis-matrix-badges.herokuapp.com/repos/kodegenix/kg-script/branches/master/2
 [3]: https://travis-matrix-badges.herokuapp.com/repos/kodegenix/kg-script/branches/master/3
 [4]: https://travis-ci.org/kodegenix/kg-script
--->
+
 
 ## License
 
