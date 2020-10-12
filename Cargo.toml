@@ -9,14 +9,11 @@ readme = "README.md"
 license = "Apache-2.0 OR MIT"
 repository = "https://github.com/Kodegenix/kg-script"
 edition = "2018"
-build = "build.rs"
 
 [workspace]
 
 [dependencies]
-lalrpop-util = "0.19.1"
-
-[dev-dependencies]
-
-[build-dependencies]
-lalrpop = "0.19.1"
+kg-diag = "0.4.0"
+kg-diag-derive = "0.4.0"
+kg-display = "0.1.2"
+kg-display-derive = "0.1.1"
