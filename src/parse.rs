@@ -128,11 +128,11 @@ impl Parser {
         if self.num_parser.is_at_start(r)? {
             let n = self.num_parser.parse_number(r)?;
             match n.term().notation() {
-                Notation::Decimal => Ok(Token::new(Terminal::IntDecimal, n.from(), n.to())),
-                Notation::Hex => Ok(Token::new(Terminal::IntHex, n.from(), n.to())),
-                Notation::Octal => Ok(Token::new(Terminal::IntOctal, n.from(), n.to())),
-                Notation::Binary => Ok(Token::new(Terminal::IntBinary, n.from(), n.to())),
-                Notation::Float | Notation::Exponent => Ok(Token::new(Terminal::Float, n.from(), n.to())),
+                Notation::Decimal => Ok(Token::new(Terminal::IntDecimal, n.start(), n.end())),
+                Notation::Hex => Ok(Token::new(Terminal::IntHex, n.start(), n.end())),
+                Notation::Octal => Ok(Token::new(Terminal::IntOctal, n.start(), n.end())),
+                Notation::Binary => Ok(Token::new(Terminal::IntBinary, n.start(), n.end())),
+                Notation::Float | Notation::Exponent => Ok(Token::new(Terminal::Float, n.start(), n.end())),
             }
         } else {
             match r.peek_char(0)? {
@@ -229,11 +229,11 @@ impl Parser {
         if self.token_queue.is_empty() {
             let t = self.lex(r)?;
             self.prev_pos = self.next_pos;
-            self.next_pos = t.to();
+            self.next_pos = t.end();
             Ok(t)
         } else {
             let t = self.token_queue.pop_front().unwrap();
-            self.next_pos = t.to();
+            self.next_pos = t.end();
             Ok(t)
         }
     }
