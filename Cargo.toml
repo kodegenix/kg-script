@@ -17,3 +17,6 @@ kg-diag = "0.4.0"
 kg-diag-derive = "0.4.0"
 kg-display = "0.1.2"
 kg-display-derive = "0.1.1"
+
+[build-dependencies]
+kg-syntax-gen = { path = "../kg-syntax/kg-syntax-gen" }
