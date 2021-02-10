@@ -1,0 +1,75 @@
+// This is a comment
+/* This is a block comment */
+# This is also a line comment
+
+// Every text file can be imported as a string variable
+const ADD_USER_SCRIPT = import "./add_user_ldap.sh"
+
+// JSON, YAML and TOML files are imported as object variables
+const SOME_DATA = import "./data.json"
+// but can be also imported as a string variable
+const SOME_DATA_TEXT = import "./data.json", format = text
+
+// module definition
+mod ldap {
+
+    // Variables placed at module level consist persisted global state
+    // of module execution
+    let status;
+
+    // All used events need to be declared. Can be public or not.
+    pub event user_add_ok; // This event can be also reacted on or
+                           // emitted in other modules
+    event user_add_error; // This event is private, so it can only
+                          // be emitted and reacted to in this module
+
+    proc add_user(user) {
+        // for every host (maybe more then one) in automatic `$$hosts` variable
+        // that has 'ldap-server' string in sequence on field `services`
+        for h in $$hosts[services*='ldap-server'] {
+            // run bash script declared in external file "./add_user_ldap.sh"
+            let result = run_script(ADD_USER_SCRIPT, params = {
+                uid: user.uid,
+                username: user.username,
+                email: user.email,
+                groups: user.groups,
+            }, host = h);
+
+            // If user was added successfully for all selected hosts, emit
+            // an event
+            if result.status == 0 {
+                emit user_add_ok {
+                    user: user
+                };
+            } else {
+            // If the script was terminated with non-zero status, emit error
+            // event
+                emit user_add_error {
+                    message: result.stderr
+                };
+            }
+        }
+    }
+
+    // Code can be decorated anywhere by metadata, used for instance in graphical
+    // representation. Metadata are assigned to an lexical element directly
+    // next to it (procedure in example below)
+    @position { x: 10, y: 10, width: 300, height: 80 }
+    proc create_local_homedir() {
+        // upon receiving `user_added` event, for every host that has
+        // `workstation` field set to `true`,
+        // create local home directory for a new user
+        on user_added { user } => {
+            for h in $$hosts[workstation==true] {
+                run_script('''
+                    #!/bin/sh
+                    mkdir /home/${user.username}
+                    chown ${user.username}:${user.username} /home/${user.username}
+                    chmod 700 /home/${user.username}
+                ''',
+                run_as = "root",
+                host = h)
+            }
+        }
+    }
+}
